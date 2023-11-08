@@ -10,11 +10,13 @@ Before you can use our port scanning program, you need to set up your environmen
 
 1. Ensure you have Python installed on your system. You can download Python from [Python's official website](https://www.python.org/downloads/).
 
-2. Download the program files to your local machine.
+2. If using linux, you need to ensure that you have the python3-tk package installed (GUI mode only) by running `sudo apt install python3-tk`(Debian) or the equivalent for your distro.
 
-3. Open your terminal or command prompt and navigate to the directory where you have saved the program files.
+3. Download the program files to your local machine.
 
-4. Install the required Python libraries, if not already installed, by running the following command:
+4. Open your terminal or command prompt and navigate to the directory where you have saved the program files.
+
+5. Install the required Python libraries, if not already installed, by running the following command:
 
 pip install -r requirements.txt
 
