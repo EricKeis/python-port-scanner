@@ -34,22 +34,22 @@ def port_scanner(target_host, port_range, output_filename):
                 except Exception as e:
                     output_file.write(f"An error occurred while scanning port {port}: {e}\n")
 
-if __name__ == "__main__":
-    try:
-        target_host = input("Enter target host: ")
-        start_port = int(input("Enter start port: "))
-        end_port = int(input("Enter end port: "))
+def run():
+  try:
+      target_host = input("Enter target host: ")
+      start_port = int(input("Enter start port: "))
+      end_port = int(input("Enter end port: "))
 
-        if start_port > end_port or not (1 <= start_port <= 65535) or not (1 <= end_port <= 65535):
-            raise ValueError("Invalid port range")
+      if start_port > end_port or not (1 <= start_port <= 65535) or not (1 <= end_port <= 65535):
+          raise ValueError("Invalid port range")
 
-        output_directory = create_output_directory()
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        output_filename = f"{output_directory}/scan_result_{timestamp}.txt"
-        port_scanner(target_host, (start_port, end_port), output_filename)
+      output_directory = create_output_directory()
+      timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+      output_filename = f"{output_directory}/scan_result_{timestamp}.txt"
+      port_scanner(target_host, (start_port, end_port), output_filename)
 
-        print(f"Scan results saved in {output_filename}")
-    except ValueError as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+      print(f"Scan results saved in {output_filename}")
+  except ValueError as e:
+      print(f"Error: {e}")
+  except Exception as e:
+      print(f"An unexpected error occurred: {e}")
