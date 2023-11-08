@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import scrolledtext
 from datetime import datetime
 import threading
 import port_scanner.scanner as scanner
@@ -25,24 +26,23 @@ class PortScannerUI:
             root, text="Scan Ports", command=self.start_scan)
         
         self.scan_progress_bar = ttk.Progressbar(root, orient="horizontal", mode="determinate")
+        self.results_text = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=40, height=10)
 
-        self.target_host_label.grid(
-            row=0, column=0, padx=5, pady=5, sticky=tk.W)
-        self.target_host_entry.grid(
-            row=0, column=1, padx=5, pady=5, sticky=tk.W)
+        self.target_host_label.grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
+        self.target_host_entry.grid(row=0, column=1, padx=5, pady=5, sticky=tk.W)
 
-        self.start_port_label.grid(
-            row=1, column=0, padx=5, pady=5, sticky=tk.W)
-        self.start_port_entry.grid(
-            row=1, column=1, padx=5, pady=5, sticky=tk.W)
+        self.start_port_label.grid(row=1, column=0, padx=5, pady=5, sticky=tk.W)
+        self.start_port_entry.grid(row=1, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.end_port_label.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
         self.end_port_entry.grid(row=2, column=1, padx=5, pady=5, sticky=tk.W)
 
         self.scan_button.grid(row=3, column=0, columnspan=2, pady=10)
-        self.scan_progress_bar.grid(row=4, column=0, columnspan=2, sticky=tk.W + tk.E)
+        self.results_text.grid(row=4, column=0, columnspan=2, pady=10, padx=10)
+        self.scan_progress_bar.grid(row=5, column=0, columnspan=2, sticky=tk.W + tk.E)
 
     def start_scan(self):
+        self.results_text.delete(1.0, tk.END)
         self.scan_button.config(state=tk.DISABLED)
         self.scan_button.config(text="Scanning Ports...")
         self.scan_progress_bar['value'] = 0
@@ -63,7 +63,12 @@ class PortScannerUI:
 
             self.scan_progress_bar["maximum"] = end_port - start_port
 
-            scanner.port_scanner(target_host, (start_port, end_port), output_filename, self.scan_progress_bar, cli=False)
+            scanner.port_scanner(target_host, (start_port, end_port), output_filename, self.scan_progress_bar, False)
+
+            # Display results in the Text widget
+            with open(output_filename, 'r') as result_file:
+                results_content = result_file.read()
+                self.results_text.insert(tk.END, results_content)
 
             self.scan_button.config(text="Scan Ports")
             messagebox.showinfo(
