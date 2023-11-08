@@ -19,7 +19,7 @@ def scan_port(target_host, target_port):
     except (socket.timeout, socket.error):
         return False
 
-def port_scanner(target_host, port_range, output_filename, progress_bar=None):
+def port_scanner(target_host, port_range, output_filename, progress_bar=None, cli=True):
     with open(output_filename, 'w') as output_file:
         output_file.write(f"Scanning target host \"{target_host}\" for ports {port_range}:\n")
 
@@ -30,16 +30,16 @@ def port_scanner(target_host, port_range, output_filename, progress_bar=None):
                 try:
                     if future.result():
                         output_file.write(f"Port {port} is open\n")
-                    #else:
-                        #output_file.write(f"Port {port} is closed\n")
                 except Exception as e:
                     output_file.write(f"An error occurred while scanning port {port}: {e}\n")
                 finally:
-                        # Update the progress bar
-                        if progress_bar:
+                        # Update the cli progress bar
+                        if cli:
                             progress_bar.update(1)
+                        elif progress_bar:
+                            progress_bar['value'] += 1
 
-        if progress_bar:
+        if cli:
           progress_bar.update()
           progress_bar.close()
 
