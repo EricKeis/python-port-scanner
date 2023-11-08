@@ -1,7 +1,13 @@
 # main_script.py
 import argparse
 import port_scanner.scanner as scanner
-import port_scanner.interface as interface
+
+gui_mode = True
+try:
+    import port_scanner.interface as interface
+except ImportError:
+    print("Package 'tkinter' is not installed. GUI mode not accessible.")
+    gui_mode = False
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Scan a desired host address for open ports.")
@@ -11,7 +17,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if args.g:
+    if gui_mode and args.g:
         interface.run()
     else:
         scanner.run()
