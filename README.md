@@ -2,7 +2,7 @@
 
 ## User Testing Guide
 
-Welcome to our Python port scanning program! This program is designed to help you scan open ports on a target host using both a Command Line Interface (CLI) and a Graphical User Interface (GUI). This guide will walk you through the steps to set up your environment and run the program successfully.
+Welcome to our Python port scanning program! This program is designed to help you scan open ports on a target host using both a Command Line Interface and a Graphical User Interface. This guide will walk you through the steps to set up your environment and run the program successfully.
 
 ### Set Up Your Environment
 
